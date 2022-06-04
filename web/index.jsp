@@ -8,9 +8,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
   <head>
-    <title>$Title$</title>
+    <title>中储粮质检管理信息系统</title>
   </head>
   <body>
-  $END$
   </body>
 </html>
