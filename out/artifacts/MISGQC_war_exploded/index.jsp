@@ -11,6 +11,5 @@
     <title>中储粮质检管理信息系统</title>
   </head>
   <body>
-
   </body>
 </html>
