@@ -1,0 +1,17 @@
+#checkCodeInputBox {
+    width: 50%;
+}
+
+.prompt {
+    text-align: justify;
+}
+
+.prompt::after {
+    display: inline-block;
+    width: 100%;
+    content: "";
+}
+
+#loginButton {
+    width: 100%;
+}
