@@ -15,7 +15,7 @@
 </head>
 
 <body>
-<form method="get" action="">
+<form method="get" action="${pageContext.request.contextPath}/LoginAction">
   <table>
     <tr>
       <th colspan="3">用户登录</th>
