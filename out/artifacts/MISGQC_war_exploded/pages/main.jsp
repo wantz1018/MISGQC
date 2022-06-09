@@ -12,6 +12,6 @@
 </head>
 <body>
 登录成功！
-<%@ include file="dataTable.jsp"%>
+<%@ include file="userDataTable.jsp"%>
 </body>
 </html>
