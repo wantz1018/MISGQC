@@ -19,7 +19,6 @@ public class Stmt {
             connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
-
         } catch (Exception e) {
             System.out.print(e.getMessage());
         }
