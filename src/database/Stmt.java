@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Stmt {
-    public static ResultSet getResultSet(String sql) throws SQLException {
+    public static ResultSet getResultSet(String table, String id) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -18,10 +18,31 @@ public class Stmt {
         try {
             connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
+            String sql = "select * from "+ table + " where id like '%" + id + "%'";
             resultSet = statement.executeQuery(sql);
+            resultSet.next();
         } catch (Exception e) {
             System.out.print(e.getMessage());
+            return null;
         }
         return resultSet;
+    }
+
+    public static void execute(String sql) {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            statement.execute(sql);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println(sql);
+        }
     }
 }
