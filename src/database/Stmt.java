@@ -28,6 +28,28 @@ public class Stmt {
         return resultSet;
     }
 
+    public static ResultSet getResultSet(String table) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            String sql = "select * from "+ table;
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            return null;
+        }
+        return resultSet;
+    }
+
     public static void execute(String sql) {
         Connection connection = null;
         Statement statement = null;
