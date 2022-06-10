@@ -54,7 +54,7 @@
         </tr>
         <tr>
             <td>
-                <input type="button" src="main.jsp" value="返回">
+                <a href="main.jsp"><button type="button">返回</button> </a>
             </td>
             <td>
                 <input type="submit" value="确认修改">
