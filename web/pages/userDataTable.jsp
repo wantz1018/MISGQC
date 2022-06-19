@@ -14,9 +14,10 @@
 <head>
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userDataTable.css">
+    <script src="${pageContext.request.contextPath}/js/userDataTable.js"></script>
 </head>
 <body>
-<form action="${pageContext.request.contextPath}/Filter">
+<form action="${pageContext.request.contextPath}/UserDataFilter">
 <table>
     <tr>
         <th colspan="8">用户信息表</th>
@@ -39,13 +40,14 @@
                 <option value="bigger">大于</option>
                 <option value="smaller">小于</option>
                 <option value="notBigger">不大于</option>
-                <option value="notSmall">不小于</option>
+                <option value="notSmaller">不小于</option>
                 <option value="include">包含</option>
                 <option value="notInclude">不包含</option>
             </select>
         </td>
         <td colspan="3"><input type="text" name="value"></td>
     </tr>
+    <!--todo:这里是多重条件区域，可根据需要添加搜索条件-->
     <tr><td colspan="7"><input type="submit" value="筛选"></td></tr>
     <tr>
         <td>id</td>
@@ -55,17 +57,28 @@
         <td colspan="3">操作</td>
     </tr>
 <%
-    int Page = 0;
+    int Page = 1;
+    if (request.getParameter("Page") != null) Page = Integer.parseInt(request.getParameter("Page"));
     int TotalPage = 0;
-    int PageSize = 0;
+    int PageSize = 2;
+    if (request.getParameter("PageSize") != null) PageSize = Integer.parseInt(request.getParameter("PageSize"));
     try {
-        ResultSet resultSet = Stmt.getResultSet("user");
-        assert resultSet != null;
-        PageSize = 2;
-        Page = 1;
+
         int TotalRecord;    //总数据数
-        int PageI = 1;  //记录指针
-        ResultSet rs = Stmt.getResult("select count(*) as recordCount from user");
+        String sql = "select count(*) as recordCount from user where true";
+        String sql2 = "select * from user where true";
+        String expression = request.getParameter("expression");
+        out.println(expression);
+        if (expression != null) {
+            if (!request.getParameter("expression").equals("") || request.getParameter("expression") != null) {
+                sql = sql + " and " + request.getParameter("expression");
+                sql2 = sql2 + " and " + request.getParameter("expression");
+            }
+        }
+        ResultSet resultSet = Stmt.getResultSet("user", sql2);
+        out.println(sql2);
+        assert resultSet != null;
+        ResultSet rs = Stmt.getResult(sql);
         TotalRecord = Objects.requireNonNull(rs).getInt("recordCount");
         if (TotalRecord % PageSize == 0)
             TotalPage = TotalRecord / PageSize;
@@ -98,7 +111,7 @@
             if (!resultSet.next()) break;
         }
     } catch (Exception e) {
-        out.print(e.getMessage());
+        out.println(e.getMessage());
     }
 %>
     <tr>
@@ -110,7 +123,7 @@
         </td>
         <td>
             <span>第</span>
-            <input type="number" name="Page" value="<%=Page%>">
+            <input id="Page" type="number" name="Page" value="<%=Page%>">
             <span>页</span>
         </td>
         <td>
@@ -119,10 +132,10 @@
             <span><%=TotalPage%></span>
             <span>页</span>
         </td>
-        <td><a><button type="button">跳转</button></a></td>
+        <td><a><button type="button" id="jumpButton">跳转</button></a></td>
         <td>
             <span>每页</span>
-            <input type="number" value="<%=PageSize%>">
+            <input type="number" value="<%=PageSize%>" name="PageSize">
             <span>条</span>
         </td>
         <td>

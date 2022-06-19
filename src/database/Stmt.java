@@ -6,7 +6,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Stmt {
-    public static ResultSet getResultSet(String table, String id) throws SQLException {
+
+    public static ResultSet getResultSet(String table, String expression) throws SQLException {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -18,8 +19,7 @@ public class Stmt {
         try {
             connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
-            String sql = "select * from "+ table + " where id like '%" + id + "%'";
-            resultSet = statement.executeQuery(sql);
+            resultSet = statement.executeQuery(expression);
             resultSet.next();
         } catch (Exception e) {
             System.out.print(e.getMessage());
