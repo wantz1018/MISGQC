@@ -28,6 +28,29 @@ public class Stmt {
         return resultSet;
     }
 
+    public static ResultSet getResultSet(String table, String attribute, String condition) throws SQLException {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(
+                    "select " + attribute + " from " + table + " where " + condition
+            );
+            resultSet.next();
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            return null;
+        }
+        return resultSet;
+    }
+
     public static ResultSet getResultSet(String table) throws SQLException {
         Connection connection = null;
         Statement statement = null;
@@ -66,5 +89,26 @@ public class Stmt {
             System.out.println(e.getMessage());
             System.out.println(sql);
         }
+    }
+
+    public static ResultSet getResult(String sql) {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        }
+        try {
+            connection = DatabaseConnection.getConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+        } catch (Exception e) {
+            System.out.print(e.getMessage());
+            return null;
+        }
+        return resultSet;
     }
 }

@@ -11,12 +11,19 @@
 <html>
 <head>
     <title>质检信息表</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/itemDataTable.css">
 </head>
 <body>
+<form>
 <table style="text-align: center">
     <tr>
         <th colspan="10">质检信息表</th>
     </tr>
+    <tr>
+        <td colspan="5">筛选条件</td>
+        <td colspan="5">值</td>
+    </tr>
+    <tr><td colspan="10"><input type="submit" value="筛选"></td></tr>
     <tr>
         <td>编号</td>
         <td>检测日期</td>
@@ -35,7 +42,7 @@
         do {
             assert resultSet != null;
 %>
-    <tr>
+    <tr class="itemDataRow">
         <td><%=resultSet.getString("id")%></td>
         <td><%=resultSet.getString("date")%></td>
         <td><%=resultSet.getString("storeName")%></td>
@@ -54,5 +61,6 @@
     }
 %>
 </table>
+</form>
 </body>
 </html>

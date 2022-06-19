@@ -1,0 +1,12 @@
+body {
+    text-align: center;
+}
+
+table {
+    margin: auto;
+}
+
+.itemDataRow:hover {
+    background-color: cornflowerblue;
+    color: #FFFFFF;
+}
