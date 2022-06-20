@@ -7,4 +7,7 @@ window.onload = function ()
     document.getElementById("itemDataLabel").addEventListener("click", function () {
         document.getElementById("iframeView").setAttribute("src", "itemDataTable.jsp")
     })
+    document.getElementById("dataEntry").addEventListener("click", function () {
+        document.getElementById("iframeView").setAttribute("src", "itemDataInput.jsp")
+    })
 }

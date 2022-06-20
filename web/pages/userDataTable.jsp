@@ -27,7 +27,7 @@
             <select name="attribute">
                 <option value="null"></option>
                 <option value="id">id</option>
-                <option value="name">姓名</option>
+                <option value="username">姓名</option>
                 <option value="password">密码</option>
                 <option value="email">电子邮件</option>
             </select>
@@ -48,7 +48,10 @@
         <td colspan="3"><input type="text" name="value"></td>
     </tr>
     <!--todo:这里是多重条件区域，可根据需要添加搜索条件-->
-    <tr><td colspan="7"><input type="submit" value="筛选"></td></tr>
+    <tr>
+        <td colspan="3"><a href="userDataTable.jsp"><button type="button">重置</button></a></td>
+        <td colspan="4"><input type="submit" value="筛选"></td>
+    </tr>
     <tr>
         <td>id</td>
         <td>姓名</td>
@@ -61,22 +64,24 @@
     if (request.getParameter("Page") != null) Page = Integer.parseInt(request.getParameter("Page"));
     int TotalPage = 0;
     int PageSize = 2;
-    if (request.getParameter("PageSize") != null) PageSize = Integer.parseInt(request.getParameter("PageSize"));
+    if (request.getParameter("PageSize") != null)
+        PageSize = Integer.parseInt(request.getParameter("PageSize"));
+    String expression;
+    expression = request.getParameter("expression");
     try {
 
         int TotalRecord;    //总数据数
         String sql = "select count(*) as recordCount from user where true";
         String sql2 = "select * from user where true";
-        String expression = request.getParameter("expression");
-        out.println(expression);
+
         if (expression != null) {
             if (!request.getParameter("expression").equals("") || request.getParameter("expression") != null) {
                 sql = sql + " and " + request.getParameter("expression");
                 sql2 = sql2 + " and " + request.getParameter("expression");
             }
         }
+        out.println(sql);
         ResultSet resultSet = Stmt.getResultSet("user", sql2);
-        out.println(sql2);
         assert resultSet != null;
         ResultSet rs = Stmt.getResult(sql);
         TotalRecord = Objects.requireNonNull(rs).getInt("recordCount");
@@ -94,9 +99,11 @@
             }
         if (Page < 1) Page = 1;
         if (Page > TotalPage) Page = TotalPage;
-        resultSet.absolute((Page - 1) * PageSize + 1);
-        for (int iPage = 1; iPage <= PageSize; iPage++) {
+        if (resultSet.next()) {
+            resultSet.absolute((Page - 1) * PageSize + 1);
+            for (int iPage = 1; iPage <= PageSize; iPage++) {
 %>
+    <%=expression%>
     <tr>
         <td><%=resultSet.getString("id")%></td>
         <td><%=resultSet.getString("username")%></td>
@@ -108,8 +115,14 @@
     </tr>
 <%
 
-            if (!resultSet.next()) break;
+                if (!resultSet.next()) break;
+            }
         }
+        else {
+            out.println(
+                    "<tr><td colspan='7'>无结果</td></tr>"
+            );
+                }
     } catch (Exception e) {
         out.println(e.getMessage());
     }
@@ -119,7 +132,7 @@
     </tr>
     <tr>
         <td>
-            <a href="userDataTable.jsp?Page=<%=Page - 1%>">上一页</a>
+            <a href="userDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">上一页</a>
         </td>
         <td>
             <span>第</span>
@@ -139,7 +152,7 @@
             <span>条</span>
         </td>
         <td>
-            <a href="userDataTable.jsp?Page=<%=Page + 1%> ">下一页</a>
+            <a href="userDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">下一页</a>
         </td>
     </tr>
 </table>

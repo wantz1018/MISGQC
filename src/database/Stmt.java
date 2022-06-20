@@ -20,7 +20,6 @@ public class Stmt {
             connection = DatabaseConnection.getConnection();
             statement = connection.createStatement();
             resultSet = statement.executeQuery(expression);
-            resultSet.next();
         } catch (Exception e) {
             System.out.print(e.getMessage());
             return null;

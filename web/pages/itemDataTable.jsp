@@ -44,11 +44,11 @@
 %>
     <tr class="itemDataRow">
         <td><%=resultSet.getString("id")%></td>
-        <td><%=resultSet.getString("date")%></td>
+        <td><%=resultSet.getString("dateTime")%></td>
         <td><%=resultSet.getString("storeName")%></td>
         <td><%=resultSet.getString("shelfNo")%></td>
         <td><%=resultSet.getString("variety")%></td>
-        <td><%=resultSet.getString("moisture&volatiles")%></td>
+        <td><%=resultSet.getString("moistureAndVolatiles")%></td>
         <td><%=resultSet.getString("insolubleImpurity")%></td>
         <td><%=resultSet.getString("solventResidue")%></td>
         <td><%=resultSet.getString("acidValue")%></td>

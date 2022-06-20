@@ -33,7 +33,10 @@
       <td>电子邮箱</td>
       <td><input type="text" name="email" required></td>
     </tr>
-    <tr><td><input type="submit" value="提交"></td></tr>
+    <tr>
+      <td><a href="userDataTable.jsp">返回</a> </td>
+      <td><input type="submit" value="提交"></td>
+    </tr>
   </table>
 </form>
 </body>
