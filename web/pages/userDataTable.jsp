@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userDataTable.css">
     <script src="${pageContext.request.contextPath}/js/userDataTable.js"></script>
     <script src="${pageContext.request.contextPath}/js/urlFilter.js"></script>
+    <script src="${pageContext.request.contextPath}/js/pageJump.js"></script>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/UserDataFilter">
@@ -64,7 +65,7 @@
     int Page = 1;
     if (request.getParameter("Page") != null) Page = Integer.parseInt(request.getParameter("Page"));
     int TotalPage = 0;
-    int PageSize = 2;
+    int PageSize = 10;
     if (request.getParameter("PageSize") != null)
         PageSize = Integer.parseInt(request.getParameter("PageSize"));
     String expression;
@@ -81,7 +82,6 @@
                 sql2 = sql2 + " and " + request.getParameter("expression");
             }
         }
-        out.println(sql);
         ResultSet resultSet = Stmt.getResultSet("user", sql2);
         assert resultSet != null;
         ResultSet rs = Stmt.getResult(sql);
@@ -104,7 +104,6 @@
             resultSet.absolute((Page - 1) * PageSize + 1);
             for (int iPage = 1; iPage <= PageSize; iPage++) {
 %>
-    <%=expression%>
     <tr>
         <td><%=resultSet.getString("id")%></td>
         <td><%=resultSet.getString("username")%></td>
@@ -133,7 +132,7 @@
     </tr>
     <tr>
         <td>
-            <a href="userDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">上一页</a>
+            <a id="lastPageButton" href="userDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canLastPage();">上一页</a>
         </td>
         <td>
             <span>第</span>
@@ -143,7 +142,7 @@
         <td>
             <span>/</span>
             <span>共</span>
-            <span><%=TotalPage%></span>
+            <span id="totalPage"><%=TotalPage%></span>
             <span>页</span>
         </td>
         <td><a><button type="button" id="jumpButton">跳转</button></a></td>
@@ -153,7 +152,7 @@
             <span>条</span>
         </td>
         <td>
-            <a href="userDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">下一页</a>
+            <a id="nextPageButton" href="userDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canNextPage();">下一页</a>
         </td>
     </tr>
 </table>

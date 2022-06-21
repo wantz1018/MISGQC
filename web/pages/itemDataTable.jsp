@@ -14,6 +14,7 @@
     <title>质检信息表</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/itemDataTable.css">
     <script src="${pageContext.request.contextPath}/js/urlFilter.js"></script>
+    <script src="${pageContext.request.contextPath}/js/pageJump.js"></script>
 </head>
 <body>
 <%
@@ -138,7 +139,7 @@
 %>
     <tr>
         <td>
-            <a href="itemDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">上一页</a>
+            <a id="lastPageButton" href="itemDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canLastPage();">上一页</a>
         </td>
         <td colspan="4">
             <span>第</span>
@@ -146,7 +147,7 @@
             <span>页</span>
             <span>/</span>
             <span>共</span>
-            <span><%=TotalPage%></span>
+            <span id="totalPage"><%=TotalPage%></span>
             <span>页</span>
         </td>
         <td><a><button type="button" id="jumpButton">跳转</button></a></td>
@@ -156,7 +157,7 @@
             <span>条</span>
         </td>
         <td>
-            <a href="itemDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">下一页</a>
+            <a id="nextPageButton" href="itemDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canNextPage()">下一页</a>
         </td>
         <td>
             <a href="itemDataInput.jsp">新增</a>
