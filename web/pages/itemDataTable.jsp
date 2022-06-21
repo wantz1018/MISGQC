@@ -16,32 +16,6 @@
     <script src="${pageContext.request.contextPath}/js/urlFilter.js"></script>
 </head>
 <body>
-<form>
-<table style="text-align: center">
-    <tr>
-        <th colspan="10">质检信息表</th>
-    </tr>
-    <tr>
-        <td colspan="10" id="filterArea">
-            <div>
-                <span class="conditionPrompt">字段</span>
-                <span class="conditionPrompt">值</span>
-            </div>
-        </td>
-    </tr>
-    <tr><td colspan="10"><input type="submit" value="筛选"></td></tr>
-    <tr>
-        <td>编号</td>
-        <td>检测日期</td>
-        <td>实际存储库点</td>
-        <td>货位点</td>
-        <td>品种</td>
-        <td>水分及挥发物<br>(%)</td>
-        <td>不溶性杂质<br>(%)</td>
-        <td>溶剂残留量<br>(mg/kg)</td>
-        <td>酸值<br>(mg/g)</td>
-        <td>过氧化值<br>(mmol/kg)</td>
-    </tr>
 <%
     int Page = 1;
     if (request.getParameter("Page") != null) Page = Integer.parseInt(request.getParameter("Page"));
@@ -81,6 +55,55 @@
             }
         if (Page < 1) Page = 1;
         if (Page > TotalPage) Page = TotalPage;
+%>
+<form action="${pageContext.request.contextPath}/ItemDataFilter">
+<table style="text-align: center">
+    <tr>
+        <th colspan="10">质检信息表</th>
+    </tr>
+    <tr>
+        <td colspan="10" id="filterArea">
+            <div>
+                <select name="attribute">
+                    <option value="null"></option>
+                    <option value="id">编号</option>
+                    <option value="dateTime">检测日期</option>
+                    <option value="storeName">实际存储库点</option>
+                    <option value="shelfNo">货位号</option>
+                    <option value="variety">品种</option>
+                    <option value="moistureAndVolatiles">水分及挥发物</option>
+                    <option value="insolubleImpurity">不溶性杂质</option>
+                    <option value="solventResidue">溶剂残留量</option>
+                    <option value="acidValue">酸值</option>
+                    <option value="peroxideValue">过氧化值</option>
+                </select>
+                <select name="relation">
+                    <option value="null"></option>
+                    <option value="equal">等于</option>
+                    <option value="smaller">小于</option>
+                </select>
+                <input type="text" name="value">
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="5"><a href="itemDataTable.jsp?Page=<%=Page%>&PageSize=<%=PageSize%>"><button type="button">重置</button> </a> </td>
+        <td colspan="5"><input type="submit" value="筛选"></td>
+    </tr>
+    <tr>
+        <td>编号</td>
+        <td>检测日期</td>
+        <td>实际存储库点</td>
+        <td>货位点</td>
+        <td>品种</td>
+        <td>水分及挥发物<br>(%)</td>
+        <td>不溶性杂质<br>(%)</td>
+        <td>溶剂残留量<br>(mg/kg)</td>
+        <td>酸值<br>(mg/g)</td>
+        <td>过氧化值<br>(mmol/kg)</td>
+    </tr>
+
+<%
         if (resultSet.next()) {
             resultSet.absolute((Page - 1) * PageSize + 1);
             for (int iPage = 1; iPage <= PageSize; iPage++) {
@@ -97,6 +120,7 @@
         <td><%=resultSet.getString("acidValue")%></td>
         <td><%=resultSet.getString("peroxideValue")%></td>
         <td><a href="updateItemForm.jsp?id=<%=resultSet.getString("id")%>">修改</a></td>
+        <td><a href="${pageContext.request.contextPath}/DeleteItemAction?id=<%=resultSet.getString("id")%>">删除</a></td>
     </tr>
 <%
 
@@ -105,7 +129,7 @@
         }
         else {
             out.println(
-                    "<tr><td colspan='7'>无结果</td></tr>"
+                    "<tr><td colspan='10'>无结果</td></tr>"
             );
         }
     } catch (Exception e) {
@@ -116,25 +140,26 @@
         <td>
             <a href="itemDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">上一页</a>
         </td>
-        <td>
+        <td colspan="4">
             <span>第</span>
             <input id="Page" type="number" name="Page" value="<%=Page%>">
             <span>页</span>
-        </td>
-        <td>
             <span>/</span>
             <span>共</span>
             <span><%=TotalPage%></span>
             <span>页</span>
         </td>
         <td><a><button type="button" id="jumpButton">跳转</button></a></td>
-        <td>
+        <td colspan="3">
             <span>每页</span>
             <input type="number" value="<%=PageSize%>" name="PageSize">
             <span>条</span>
         </td>
         <td>
             <a href="itemDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">下一页</a>
+        </td>
+        <td>
+            <a href="itemDataInput.jsp">新增</a>
         </td>
     </tr>
 </table>

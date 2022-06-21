@@ -12,6 +12,7 @@
 <html>
 <head>
     <title>Title</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/updateItemForm.css">
 </head>
 <body>
 <%

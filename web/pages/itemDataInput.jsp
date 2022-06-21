@@ -84,7 +84,10 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td>
+                <a href="itemDataTable.jsp"><button type="button">返回</button> </a>
+            </td>
+            <td>
                 <input type="submit" value="添加">
             </td>
         </tr>
