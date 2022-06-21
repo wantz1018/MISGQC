@@ -1,5 +1,6 @@
 <%@ page import="java.sql.ResultSet" %>
-<%@ page import="database.Stmt" %><%--
+<%@ page import="database.Stmt" %>
+<%@ page import="java.util.Objects" %><%--
   Created by IntelliJ IDEA.
   Author:Wantz
   Email:wantz@foxmail.com
@@ -12,6 +13,7 @@
 <head>
     <title>质检信息表</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/itemDataTable.css">
+    <script src="${pageContext.request.contextPath}/js/urlFilter.js"></script>
 </head>
 <body>
 <form>
@@ -20,8 +22,12 @@
         <th colspan="10">质检信息表</th>
     </tr>
     <tr>
-        <td colspan="5">筛选条件</td>
-        <td colspan="5">值</td>
+        <td colspan="10" id="filterArea">
+            <div>
+                <span class="conditionPrompt">字段</span>
+                <span class="conditionPrompt">值</span>
+            </div>
+        </td>
     </tr>
     <tr><td colspan="10"><input type="submit" value="筛选"></td></tr>
     <tr>
@@ -37,10 +43,47 @@
         <td>过氧化值<br>(mmol/kg)</td>
     </tr>
 <%
+    int Page = 1;
+    if (request.getParameter("Page") != null) Page = Integer.parseInt(request.getParameter("Page"));
+    int TotalPage = 0;
+    int PageSize = 10;
+    if (request.getParameter("PageSize") != null)
+        PageSize = Integer.parseInt(request.getParameter("PageSize"));
+    String expression;
+    expression = request.getParameter("expression");
     try {
-        ResultSet resultSet = Stmt.getResultSet("record");
-        do {
-            assert resultSet != null;
+
+        int TotalRecord;    //总数据数
+        String sql = "select count(*) as recordCount from record where true";
+        String sql2 = "select * from record where true";
+
+        if (expression != null) {
+            if (!request.getParameter("expression").equals("") || request.getParameter("expression") != null) {
+                sql = sql + " and " + request.getParameter("expression");
+                sql2 = sql2 + " and " + request.getParameter("expression");
+            }
+        }
+        ResultSet resultSet = Stmt.getResultSet("record", sql2);
+        assert resultSet != null;
+        ResultSet rs = Stmt.getResult(sql);
+        TotalRecord = Objects.requireNonNull(rs).getInt("recordCount");
+        if (TotalRecord % PageSize == 0)
+            TotalPage = TotalRecord / PageSize;
+        else
+            TotalPage = (int) Math.floor(TotalRecord / PageSize) + 1;
+        if (TotalPage == 0) TotalPage = 1;
+        if (request.getParameter("Page") == null || request.getParameter("Page").equals("")) Page = 1;
+        else
+            try {
+                Page = Integer.parseInt(request.getParameter("Page"));
+            } catch (java.lang.NumberFormatException e) {
+                Page = 1;
+            }
+        if (Page < 1) Page = 1;
+        if (Page > TotalPage) Page = TotalPage;
+        if (resultSet.next()) {
+            resultSet.absolute((Page - 1) * PageSize + 1);
+            for (int iPage = 1; iPage <= PageSize; iPage++) {
 %>
     <tr class="itemDataRow">
         <td><%=resultSet.getString("id")%></td>
@@ -53,13 +96,47 @@
         <td><%=resultSet.getString("solventResidue")%></td>
         <td><%=resultSet.getString("acidValue")%></td>
         <td><%=resultSet.getString("peroxideValue")%></td>
+        <td><a href="updateItemForm.jsp?id=<%=resultSet.getString("id")%>">修改</a></td>
     </tr>
 <%
-        } while (resultSet.next());
+
+                if (!resultSet.next()) break;
+            }
+        }
+        else {
+            out.println(
+                    "<tr><td colspan='7'>无结果</td></tr>"
+            );
+        }
     } catch (Exception e) {
-        out.print(e.getMessage());
+        out.println(e.getMessage());
     }
 %>
+    <tr>
+        <td>
+            <a href="itemDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">上一页</a>
+        </td>
+        <td>
+            <span>第</span>
+            <input id="Page" type="number" name="Page" value="<%=Page%>">
+            <span>页</span>
+        </td>
+        <td>
+            <span>/</span>
+            <span>共</span>
+            <span><%=TotalPage%></span>
+            <span>页</span>
+        </td>
+        <td><a><button type="button" id="jumpButton">跳转</button></a></td>
+        <td>
+            <span>每页</span>
+            <input type="number" value="<%=PageSize%>" name="PageSize">
+            <span>条</span>
+        </td>
+        <td>
+            <a href="itemDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>">下一页</a>
+        </td>
+    </tr>
 </table>
 </form>
 </body>

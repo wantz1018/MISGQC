@@ -15,6 +15,7 @@
     <title>Title</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/userDataTable.css">
     <script src="${pageContext.request.contextPath}/js/userDataTable.js"></script>
+    <script src="${pageContext.request.contextPath}/js/urlFilter.js"></script>
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/UserDataFilter">
