@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/itemDataTable.css">
     <script src="${pageContext.request.contextPath}/js/urlFilter.js"></script>
     <script src="${pageContext.request.contextPath}/js/pageJump.js"></script>
+    <script src="${pageContext.request.contextPath}/js/itemDataTable.js"></script>
 </head>
 <body>
 <%
@@ -92,6 +93,9 @@
         <td colspan="5"><input type="submit" value="筛选"></td>
     </tr>
     <tr>
+        <td>
+            <input id="itemDataAllCheckBox" type="checkbox" onclick="allSelected()">全选
+        </td>
         <td>编号</td>
         <td>检测日期</td>
         <td>实际存储库点</td>
@@ -110,6 +114,7 @@
             for (int iPage = 1; iPage <= PageSize; iPage++) {
 %>
     <tr class="itemDataRow">
+        <td><input class="itemDataCheckBox" type="checkbox" onclick="itemTableClicked(this); checkedChange()" name=<%=resultSet.getString("id")%>></td>
         <td><%=resultSet.getString("id")%></td>
         <td><%=resultSet.getString("dateTime")%></td>
         <td><%=resultSet.getString("storeName")%></td>
@@ -121,7 +126,7 @@
         <td><%=resultSet.getString("acidValue")%></td>
         <td><%=resultSet.getString("peroxideValue")%></td>
         <td><a href="updateItemForm.jsp?id=<%=resultSet.getString("id")%>">修改</a></td>
-        <td><a href="${pageContext.request.contextPath}/DeleteItemAction?id=<%=resultSet.getString("id")%>">删除</a></td>
+        <td><a onclick="deleteConfirm('${pageContext.request.contextPath}/DeleteItemAction?id=<%=resultSet.getString("id")%>')">删除</a></td>
     </tr>
 <%
 
@@ -138,6 +143,9 @@
     }
 %>
     <tr>
+        <td>
+            <input id="reverseSelectedBox" type="checkbox" onclick="reverseSelected()">反选
+        </td>
         <td>
             <a id="lastPageButton" href="itemDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canLastPage();">上一页</a>
         </td>
