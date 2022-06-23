@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.SQLException;
 
 @WebServlet(name = "LoginAction", value = "/LoginAction")
 public class LoginAction extends HttpServlet {
@@ -14,11 +15,15 @@ public class LoginAction extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (CheckPassword.checkPassword(username, password)) {
-            response.sendRedirect("pages/main.jsp");
-        }
-        else {
-            response.sendRedirect("pages/login.jsp");
+        try {
+            if (CheckPassword.checkPassword(username, password)) {
+                response.sendRedirect("pages/main.jsp");
+            }
+            else {
+                response.sendRedirect("pages/login.jsp");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

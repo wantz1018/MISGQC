@@ -1,3 +1,12 @@
+body {
+    text-align: center;
+}
+
+table {
+    margin: auto;
+}
+
+
 #checkCodeInputBox {
     width: 50%;
 }

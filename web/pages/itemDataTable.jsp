@@ -144,14 +144,17 @@
 %>
     <tr>
         <td>
-            <input id="reverseSelectedBox" type="checkbox" onclick="reverseSelected()">反选
+            <input id="reverseSelectedBox" type="checkbox" onclick="reverseSelected(); checkedChange()">反选
+        </td>
+        <td>
+            <a href="itemDataTable.jsp?Page=1&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canLastPage()">首页</a>
         </td>
         <td>
             <a id="lastPageButton" href="itemDataTable.jsp?Page=<%=Page - 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canLastPage();">上一页</a>
         </td>
-        <td colspan="4">
+        <td colspan="3">
             <span>第</span>
-            <input id="Page" type="number" name="Page" value="<%=Page%>">
+            <input id="Page" type="number" name="Page" value="<%=Page%>" step="1" min="1" max="<%=TotalPage%>">
             <span>页</span>
             <span>/</span>
             <span>共</span>
@@ -159,13 +162,16 @@
             <span>页</span>
         </td>
         <td><a><button type="button" id="jumpButton">跳转</button></a></td>
-        <td colspan="3">
+        <td colspan="2">
             <span>每页</span>
-            <input type="number" value="<%=PageSize%>" name="PageSize">
+            <input type="number" value="<%=PageSize%>" step="1" min="1" max="20" name="PageSize">
             <span>条</span>
         </td>
         <td>
             <a id="nextPageButton" href="itemDataTable.jsp?Page=<%=Page + 1%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canNextPage()">下一页</a>
+        </td>
+        <td>
+            <a href="itemDataTable.jsp?Page=<%=TotalPage%>&PageSize=<%=PageSize%>&expression=<%=expression%>" onclick="return canNextPage()">尾页</a>
         </td>
         <td>
             <a href="itemDataInput.jsp">新增</a>

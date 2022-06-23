@@ -88,5 +88,6 @@ function checkedChange() {
         document.getElementById("itemDataAllCheckBox").checked = false
         allSelect = false
     }
+    else allSelect = false
 
 }
