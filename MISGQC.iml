@@ -30,5 +30,6 @@
     <orderEntry type="library" name="struts" level="project" />
     <orderEntry type="library" name="struts2-core-2.0.11.1" level="project" />
     <orderEntry type="library" name="struts2-jfreechart-plugin-2.0.11.1" level="project" />
+    <orderEntry type="library" name="jquery" level="application" />
   </component>
 </module>

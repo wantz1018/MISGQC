@@ -1,6 +1,7 @@
 package servlet;
 
-import method.CheckPassword;
+
+import method.Password;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -12,11 +13,12 @@ import java.sql.SQLException;
 public class LoginAction extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String username = request.getParameter("username");
+        String id = request.getParameter("id");
         String password = request.getParameter("password");
 
         try {
-            if (CheckPassword.checkPassword(username, password)) {
+            if (Password.checkPassword(id, password)) {
+                request.getSession().setAttribute("userID", id);
                 response.sendRedirect("pages/main.jsp");
             }
             else {

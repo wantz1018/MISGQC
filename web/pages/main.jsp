@@ -1,3 +1,6 @@
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="database.Stmt" %>
+<%@ page import="java.sql.SQLException" %>
 <%@ taglib prefix="html" uri="http://jakarta.apache.org/struts/tags-html" %>
 <%--
   Created by IntelliJ IDEA.
@@ -16,8 +19,21 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/mainPageElement.css">
 </head>
 <body>
+<%
+    ResultSet resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
+    String username;
+    try {
+        assert resultSet != null;
+        username = resultSet.getString("username");
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+%>
 <table style="height: 100%;width: 100%; border: plum;">
-    <tr style="background-color: lightgoldenrodyellow; height: 10%"><td colspan="2"> </td></tr>
+    <tr style="background-color: lightgoldenrodyellow; height: 10%"><td id="mainTop" colspan="2">
+        <span>欢迎您，<%=username%></span>
+        <span><a href="login.jsp">注销</a></span>
+    </td></tr>
     <tr style="background-color: aquamarine; height: 80%">
         <td style="width: 15%; background-color: khaki" id="leftLabelArea">
             <div class="leftLabel" id="dataEntry">数据录入</div>

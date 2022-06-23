@@ -1,9 +1,12 @@
-body {
+html {
     text-align: center;
+    background-size: cover;
+    background-image: url("../sourse/image/rice-farming-2775411.jpg");
 }
 
 table {
     margin: auto;
+    background: deepskyblue;
 }
 
 
