@@ -15,24 +15,27 @@
     <script src="${pageContext.request.contextPath}/js/login.js"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
-
+<%
+    session.setAttribute("userID", "");
+%>
 <body onload="createCheckCode()">
+<div id="loginForm">
 <form method="get" action="${pageContext.request.contextPath}/LoginAction">
-    <table>
+    <table id="loginTable">
         <tr>
-            <th colspan="3">用户登录</th>
+            <th colspan="2">用户登录</th>
         </tr>
         <tr>
             <td>
                 <div class="prompt">用户id</div>
             </td>
-            <td colspan="2"><input type="text" name="id" id="" required></td>
+            <td colspan="1"><input type="text" name="id" id="" required></td>
         </tr>
         <tr>
             <td>
                 <div class="prompt">密码</div>
             </td>
-            <td colspan="2"><input type="password" name="password" required></td>
+            <td><input type="password" name="password" required></td>
         </tr>
         <tr>
             <td>
@@ -42,26 +45,26 @@
                 <input type="text" name="" id="checkCodeInputBox" required>
                 <a href="#" onclick="createCheckCode()"><img id="checkCodeCanvas" src="">看不清？</a>
             </td>
-
         </tr>
         <tr>
             <td>
                 <div><a href="">用户注册</a></div>
             </td>
             <td>
-                <div><a href="">忘记密码</a></div>
+                <div><a href="">忘记密码？</a></div>
             </td>
             <td id="checkCodeImgArea">
                 <span class="prompt" id="checkCodeError"></span>
             </td>
         </tr>
         <tr>
-            <td colspan="3">
+            <td colspan="2">
                 <input onclick="checkCheckCode()" id="loginButton" type="submit" value="登录">
             </td>
         </tr>
     </table>
 </form>
+</div>
 </body>
 
 </html>
