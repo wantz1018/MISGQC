@@ -28,28 +28,42 @@ table {
     content: "";
 }
 
-#loginButton {
+#registeredButton {
     width: 100%;
 }
 
 
-#loginForm {
+#registeredForm {
     border-radius: 20px;
     width: 350px;
-    height: 180px;
+    height: 300px;
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 30%;
+    transform: translate(-50%, -10%);
     background-color: rgba(255, 255, 255, 80%)
 }
 
-td th {
+td  {
     margin: auto;
     vertical-align: bottom;
     height: 30px;
+    white-space: nowrap;
+    text-align: justify-all;
+}
+
+th {
+    text-align: center;
 }
 
 img {
     vertical-align: bottom;
+}
+
+span {
+    display: inline-block;
+}
+
+#passwordNotEqual {
+    display: none;
 }

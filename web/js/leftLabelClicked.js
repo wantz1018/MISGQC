@@ -10,4 +10,7 @@ window.onload = function ()
     document.getElementById("dataEntry").addEventListener("click", function () {
         document.getElementById("iframeView").setAttribute("src", "itemDataInput.jsp")
     })
+    document.getElementById("dataAnalysis").addEventListener("click", function () {
+        document.getElementById("iframeView").setAttribute("src", "dataAnalysis.jsp")
+    })
 }

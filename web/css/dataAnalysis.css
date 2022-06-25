@@ -1,0 +1,31 @@
+.beSelectedArea {
+    background-color: #66CCFF;
+    height: 20%;
+    position: relative;
+}
+
+.container {
+    background-color: peru;
+    height: 80%;
+    width: 70%;
+    float: left;
+}
+
+.chartInformationArea {
+    background-color: darkkhaki;
+    height: 80%;
+    width: 30%;
+    float: right;
+}
+
+.dataItemArea {
+    position: absolute;
+}
+
+.dataItem {
+    display: inline-block;
+    background-color: red;
+    height: 70%;
+    text-align: center;
+    vertical-align: middle;
+}

@@ -31,5 +31,9 @@
     <orderEntry type="library" name="struts2-core-2.0.11.1" level="project" />
     <orderEntry type="library" name="struts2-jfreechart-plugin-2.0.11.1" level="project" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="highcharts" level="application" />
+    <orderEntry type="library" name="exporting" level="application" />
+    <orderEntry type="library" name="data" level="application" />
+    <orderEntry type="library" name="highcharts-zh_CN" level="application" />
   </component>
 </module>

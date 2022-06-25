@@ -21,12 +21,13 @@
 <body>
 <%
     ResultSet resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
-    String username;
+    String username = "游客";
     try {
         assert resultSet != null;
         username = resultSet.getString("username");
     } catch (SQLException e) {
-        throw new RuntimeException(e);
+        out.print("error");
+        response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
     }
 %>
 <table style="height: 100%;width: 100%; border: plum;">
@@ -38,7 +39,7 @@
         <td style="width: 15%; background-color: khaki" id="leftLabelArea">
             <div class="leftLabel" id="dataEntry">数据录入</div>
             <div class="leftLabel" id="itemDataLabel">全部数据</div>
-            <div class="leftLabel" id="dataAnalyse">数据分析</div>
+            <div class="leftLabel" id="dataAnalysis">数据分析</div>
             <div class="leftLabel" id="userManageLabel">用户管理</div>
         </td>
         <td style="background-color: burlywood; width: 75%; vertical-align: top">

@@ -4,7 +4,7 @@ html {
     background-image: url("../sourse/image/rice-farming-2775411.jpg");
 }
 
-a {
+a, span {
     white-space: nowrap;
     vertical-align: bottom;
 }

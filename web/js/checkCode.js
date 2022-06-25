@@ -67,8 +67,9 @@ function createCheckCode() {
 }
 
 function checkCheckCode() {
-    if (document.querySelector("#checkCodeInputBox").value.toUpperCase() !== checkCode) {
-        document.querySelector("#checkCodeError").innerHTML = "验证码错误！"
+    if (document.querySelector("#checkCodeInputBox").value.toUpperCase() !== checkCode && document.querySelector("#checkCodeInputBox").value.toUpperCase()) {
+        document.querySelector("#checkCodeError").innerHTML = "验证码错误！";
         document.querySelector("#checkCodeInputBox").value = ""
+        setTimeout(function() {createCheckCode()}, 500)
     }
 }

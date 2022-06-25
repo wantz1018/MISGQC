@@ -12,7 +12,7 @@
     <title>中储粮质检信息管理系统</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/loginTable.css">
     <meta charset="utf-8">
-    <script src="${pageContext.request.contextPath}/js/login.js"></script>
+    <script src="${pageContext.request.contextPath}/js/checkCode.js"></script>
     <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <%
@@ -48,12 +48,10 @@
         </tr>
         <tr>
             <td>
-                <div><a href="">用户注册</a></div>
+                <div><a href="registered.jsp">用户注册</a></div>
             </td>
             <td>
-                <div><a href="">忘记密码？</a></div>
-            </td>
-            <td id="checkCodeImgArea">
+                <span>忘记密码</span>
                 <span class="prompt" id="checkCodeError"></span>
             </td>
         </tr>
