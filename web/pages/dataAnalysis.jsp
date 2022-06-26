@@ -14,14 +14,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/dataAnalysis.css">
 </head>
 <%
-    ResultSet resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
+    /*ResultSet resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
     String username = "游客";
     try {
         assert resultSet != null;
         username = resultSet.getString("username");
     } catch (SQLException e) {
         response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
-    }
+    }*/
 %>
 <body>
 <div class="beSelectedArea">
@@ -39,6 +39,25 @@
     </div>
 </div>
 <div class="container">图表区域</div>
-<div class="chartInformationArea">所需信息</div>
+<div class="chartInformationArea">
+    <div class="chartInformation graph">
+        <div>图表设置</div>
+        <div>图表类型</div>
+        <div>标题</div>
+        <div>其它</div>
+    </div>
+    <div class="chartInformation X-axis">
+        <div>X轴</div>
+        <div class="dragTarget"></div>
+    </div>
+    <div class="chartInformation Y-axis">
+        <div>Y轴</div>
+        <div class="dragTarget"></div>
+    </div>
+    <div class="chartInformation Y-axis-ex">
+        <div>额外Y轴</div>
+        <div class="dragTarget"></div>
+    </div>
+</div>
 </body>
 </html>
