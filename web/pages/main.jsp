@@ -20,13 +20,18 @@
 </head>
 <body>
 <%
-    ResultSet resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
+    ResultSet resultSet = null;
+    if (("user").equals(request.getParameter("role"))) {
+       resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
+    }
+    else if (("administrator").equals(request.getParameter("role"))) {
+        resultSet = Stmt.getResult("select name as username from administrator where id = '" + session.getAttribute("userID") + "'");
+    }
     String username = "游客";
     try {
         assert resultSet != null;
         username = resultSet.getString("username");
     } catch (SQLException e) {
-        out.print("error");
         response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
     }
 %>

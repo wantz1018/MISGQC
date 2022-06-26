@@ -17,9 +17,13 @@ public class LoginAction extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            if (Password.checkPassword(id, password)) {
+            if (("user").equals(Password.checkPassword(id, password))) {
                 request.getSession().setAttribute("userID", id);
-                response.sendRedirect("pages/main.jsp");
+                response.sendRedirect("pages/main.jsp?role=user");
+            }
+            else if (("administrator").equals(Password.checkPassword(id, password))) {
+                request.getSession().setAttribute("userID", id);
+                response.sendRedirect("pages/main.jsp?role=administrator");
             }
             else {
                 response.sendRedirect("pages/login.jsp");
