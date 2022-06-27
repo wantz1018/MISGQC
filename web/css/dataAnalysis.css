@@ -31,6 +31,13 @@
 }
 
 .chartInformation {
-    height: 25%;
+    height: 20%;
     color: #FFFFFF;
+}
+
+.dragTarget {
+    background-color: silver;
+    border-radius: 10%;
+    width: 50%;
+    height: 30%;
 }

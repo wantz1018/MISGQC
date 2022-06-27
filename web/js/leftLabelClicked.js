@@ -1,7 +1,7 @@
 window.onload = function ()
 {
-    document.getElementById("userManageLabel").addEventListener("click", function () {
-        document.getElementById("iframeView").setAttribute("src", "userDataTable.jsp")
+    document.getElementById("dataAnalysis").addEventListener("click", function () {
+        document.getElementById("iframeView").setAttribute("src", "dataAnalysis.jsp")
     })
 
     document.getElementById("itemDataLabel").addEventListener("click", function () {
@@ -9,8 +9,5 @@ window.onload = function ()
     })
     document.getElementById("dataEntry").addEventListener("click", function () {
         document.getElementById("iframeView").setAttribute("src", "itemDataInput.jsp")
-    })
-    document.getElementById("dataAnalysis").addEventListener("click", function () {
-        document.getElementById("iframeView").setAttribute("src", "dataAnalysis.jsp")
     })
 }

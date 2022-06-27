@@ -1,6 +1,7 @@
-<%@ page import="java.sql.ResultSet" %>
+        <%@ page import="java.sql.ResultSet" %>
 <%@ page import="database.Stmt" %>
 <%@ page import="java.sql.SQLException" %>
+<%@ page import="java.sql.ResultSetMetaData" %>
 <%@ taglib prefix="html" uri="http://jakarta.apache.org/struts/tags-html" %>
 <%--
   Created by IntelliJ IDEA.
@@ -20,15 +21,23 @@
 </head>
 <body>
 <%
-    ResultSet resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
+    ResultSet resultSet = null;
+    if (("user").equals(request.getParameter("role"))) {
+        resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
+    } else if (("administrator").equals(request.getParameter("role"))) {
+        resultSet = Stmt.getResult("select name as username from administrator where id = '" + session.getAttribute("userID") + "'");
+    }
     String username = "游客";
+    String role = null;
     try {
         assert resultSet != null;
         username = resultSet.getString("username");
-    } catch (SQLException e) {
-        out.print("error");
+        ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+        role = resultSetMetaData.getTableName(1);
+    } catch (Exception e) {
         response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
     }
+
 %>
 <table style="height: 100%;width: 100%; border: plum;">
     <tr style="background-color: lightgoldenrodyellow; height: 10%"><td id="mainTop" colspan="2">
@@ -40,7 +49,24 @@
             <div class="leftLabel" id="dataEntry">数据录入</div>
             <div class="leftLabel" id="itemDataLabel">全部数据</div>
             <div class="leftLabel" id="dataAnalysis">数据分析</div>
+            <%
+                try{
+                assert role != null;
+                if (role.equals("administrator")) {
+
+
+            %>
+
             <div class="leftLabel" id="userManageLabel">用户管理</div>
+            <script>
+                    document.getElementById("userManageLabel").onclick = function () {
+                        document.getElementById("iframeView").setAttribute("src", "userDataTable.jsp")
+                }
+            </script>
+            <%
+                }
+                } catch (Exception ignored)  {}
+            %>
         </td>
         <td style="background-color: burlywood; width: 75%; vertical-align: top">
             <iframe id="iframeView" src="itemDataTable.jsp" height="100%" width="100%">
