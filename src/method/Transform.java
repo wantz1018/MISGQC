@@ -25,4 +25,36 @@ public class Transform {
         else return attribute + symbol + URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 
+    public static String toName(String En) {
+        return switch (En) {
+            case "id" -> "编号";
+            case "dateTime" -> "时间";
+            case "storeName" -> "储存库点";
+            case "shelfNo" -> "货架编号";
+            case "variety" -> "种类";
+            case "moistureAndVolatiles" -> "水分及挥发物";
+            case "insolubleImpurity" -> "不溶性杂质";
+            case "solventResidue" -> "溶剂残留量";
+            case "acidValue" -> "酸值";
+            case "peroxideValue" -> "过氧化值";
+            default -> "null";
+        };
+    }
+
+    public static String toUnit(String En) {
+        return switch (En) {
+            case "id" -> "";
+            case "dateTime" -> "";
+            case "storeName" -> "";
+            case "shelfNo" -> "";
+            case "variety" -> "";
+            case "moistureAndVolatiles" -> "(%)";
+            case "insolubleImpurity" -> "(%)";
+            case "solventResidue" -> "溶剂残留量(mg/kg)";
+            case "acidValue" -> "酸值(mg/g)";
+            case "peroxideValue" -> "过氧化值mmol/kg)";
+            default -> "null";
+        };
+    }
+
 }

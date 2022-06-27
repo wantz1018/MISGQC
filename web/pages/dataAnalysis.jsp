@@ -1,6 +1,7 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="database.Stmt" %><%--
+<%@ page import="database.Stmt" %>
+<%@ page import="method.Transform" %><%--
   Created by IntelliJ IDEA.
   Author:Wantz
   Email:wantz@foxmail.com
@@ -19,84 +20,142 @@
     <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
     <script src="${pageContext.request.contextPath}/js/dataAnalysis.js"></script>
 </head>
-<%
-    /*ResultSet resultSet = Stmt.getResult("select username from user where id = '" + session.getAttribute("userID") + "'");
-    String username = "游客";
-    try {
-        assert resultSet != null;
-        username = resultSet.getString("username");
-    } catch (SQLException e) {
-        response.sendRedirect(request.getContextPath() + "/pages/login.jsp");
-    }*/
-%>
+
+
+
 <body>
 <div class="beSelectedArea">
-    <table class="datatable" id="data">
+    <table id="datatable">
+        <%
+            String X = request.getParameter("X-axis");
+            String Y = request.getParameter("Y-axis");
+            String Ex_Y = request.getParameter("ex-Y-axis");
+            ResultSet resultSet_3 = null;
+            if (X != null && Y != null) {
+                if (Ex_Y != null) {
+                    resultSet_3 = Stmt.getResult("select  "+  Ex_Y + " from record");
+                }
+                ResultSet resultSet_1 = Stmt.getResult("select " + X + " from record");
+                ResultSet resultSet_2 = Stmt.getResult("select "  + Y + " from record");
+        %>
+        <thead>
+        <tr>
+            <th><%=Transform.toName(X)%></th>
+            <th><%=Transform.toName(Y)%></th>
+        <%
+            if (Ex_Y != null && !Ex_Y.equals("")) {
+        %>
+            <th><%=Transform.toName(Ex_Y)%></th>
+            <%
+                }
+            %>
+        </tr>
+        </thead>
+        <tbody>
+<%
+    while (true) {
+        try {
+            assert resultSet_1 != null;
+            if (!resultSet_1.next()) break;{
+%>
+<tr>
+    <th><%=resultSet_1.getString(X)%></th>
+            <%
+                }
+                assert resultSet_2 != null;
+                if (!resultSet_2.next()) break; {
+            %>
+                <td><%=resultSet_2.getString(Y)%></td>
+    <%
+        }
+        assert resultSet_3 != null;
+            if (!Ex_Y.equals("")) {
 
+                if (!resultSet_3.next()) break; {
+            %>
+                <td><%=resultSet_3.getString(Ex_Y)!=null?resultSet_3.getString(Ex_Y):""%></td>
+    <%
+                }
+            }
+
+    %>
+</tr>
+<%
+
+
+            }catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+    }
+    }
+%>
+        </tbody>
     </table>
 </div>
-<div class="container"></div>
+<div class="container" id="container"> </div>
 <div class="chartInformationArea">
     <form>
     <div class="chartInformation graph">
-        <div>标题<input type="text" name="title" id="title"></div>
-        <div>图表类型<select id="type">
-            <option value="zzt">柱状图</option>
-            <option value="txt">条形图</option>
-            <option value="zxt">折线图</option>
-            <option value="bt">饼图</option>
+        <div>标题<input type="text" name="title" id="title" value="<%=request.getParameter("title")!=null?request.getParameter("title"):""%>"></div>
+        <div>图表类型<select id="type" name="type">
+            <option value="column" <%="column".equals(request.getParameter("type")) ? "selected" : ""%>>柱状图</option>
+            <option value="bar" <%="bar".equals(request.getParameter("type")) ? "selected" : ""%>>条形图</option>
+            <option value="line" <%="line".equals(request.getParameter("type")) ? "selected" : ""%>>折线图</option>
+            <option value="pie" <%="pie".equals(request.getParameter("type")) ? "selected" : ""%>>饼图</option>
+            <option value="scatter" <%="scatter".equals(request.getParameter("type")) ? "selected" : ""%>>散点图</option>
         </select></div>
     </div>
     <div class="chartInformation X-axis">
         <div class="dragTarget" >X轴</div>
         <div><select id="X-axis" name="X-axis">
             <option value="null"></option>
-            <option value="id">编号</option>
-            <option value="dateTime">检测日期</option>
-            <option value="storeName">实际存储库点</option>
-            <option value="shelfNo">货位号</option>
-            <option value="variety">品种</option>
-            <option value="moistureAndVolatiles">水分及挥发物</option>
-            <option value="insolubleImpurity">不溶性杂质</option>
-            <option value="solventResidue">溶剂残留量</option>
-            <option value="acidValue">酸值</option>
-            <option value="peroxideValue">过氧化值</option>
+            <option value="id" <%="id".equals(request.getParameter("X-axis")) ? "selected" : ""%>>编号</option>
+            <option value="dateTime" <%="dateTime".equals(request.getParameter("X-axis")) ? "selected" : ""%>>检测日期</option>
+            <option value="storeName" <%="storeName".equals(request.getParameter("X-axis")) ? "selected" : ""%>>实际存储库点</option>
+            <option value="shelfNo" <%="shelfNo".equals(request.getParameter("X-axis")) ? "selected" : ""%>>货位号</option>
+            <option value="variety" <%="variety".equals(request.getParameter("X-axis")) ? "selected" : ""%>>品种</option>
+            <option value="moistureAndVolatiles" <%="moistureAndVolatiles".equals(request.getParameter("X-axis")) ? "selected" : ""%>>水分及挥发物</option>
+            <option value="insolubleImpurity" <%="insolubleImpurity".equals(request.getParameter("X-axis")) ? "selected" : ""%>>不溶性杂质</option>
+            <option value="solventResidue" <%="solventResidue".equals(request.getParameter("X-axis")) ? "selected" : ""%>>溶剂残留量</option>
+            <option value="acidValue" <%="acidValue".equals(request.getParameter("X-axis")) ? "selected" : ""%>>酸值</option>
+            <option value="peroxideValue" <%="peroxideValue".equals(request.getParameter("X-axis")) ? "selected" : ""%>>过氧化值</option>
         </select></div>
     </div>
     <div class="chartInformation Y-axis">
         <div class="dragTarget">Y轴</div>
         <div><select id="Y-axis" name="Y-axis">
             <option value="null"></option>
-            <option value="id">编号</option>
-            <option value="dateTime">检测日期</option>
-            <option value="storeName">实际存储库点</option>
-            <option value="shelfNo">货位号</option>
-            <option value="variety">品种</option>
-            <option value="moistureAndVolatiles">水分及挥发物</option>
-            <option value="insolubleImpurity">不溶性杂质</option>
-            <option value="solventResidue">溶剂残留量</option>
-            <option value="acidValue">酸值</option>
-            <option value="peroxideValue">过氧化值</option>
+            <option value="id" <%="id".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>编号</option>
+            <option value="dateTime" <%="dateTime".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>检测日期</option>
+            <option value="storeName" <%="storeName".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>实际存储库点</option>
+            <option value="shelfNo" <%="shelfNo".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>货位号</option>
+            <option value="variety" <%="variety".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>品种</option>
+            <option value="moistureAndVolatiles" <%="moistureAndVolatiles".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>水分及挥发物</option>
+            <option value="insolubleImpurity" <%="insolubleImpurity".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>不溶性杂质</option>
+            <option value="solventResidue" <%="solventResidue".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>溶剂残留量</option>
+            <option value="acidValue" <%="acidValue".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>酸值</option>
+            <option value="peroxideValue" <%="peroxideValue".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>过氧化值</option>
         </select></div>
     </div>
     <div class="chartInformation Y-axis-ex">
         <div class="dragTarget">额外Y轴</div>
         <div><select id="ex-Y-axis" name="ex-Y-axis">
             <option value="null"></option>
-            <option value="id">编号</option>
-            <option value="dateTime">检测日期</option>
-            <option value="storeName">实际存储库点</option>
-            <option value="shelfNo">货位号</option>
-            <option value="variety">品种</option>
-            <option value="moistureAndVolatiles">水分及挥发物</option>
-            <option value="insolubleImpurity">不溶性杂质</option>
-            <option value="solventResidue">溶剂残留量</option>
-            <option value="acidValue">酸值</option>
-            <option value="peroxideValue">过氧化值</option>
+            <option value="id" <%="id".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>编号</option>
+            <option value="dateTime" <%="dateTime".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>检测日期</option>
+            <option value="storeName" <%="storeName".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>实际存储库点</option>
+            <option value="shelfNo" <%="shelfNo".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>货位号</option>
+            <option value="variety" <%="variety".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>品种</option>
+            <option value="moistureAndVolatiles" <%="moistureAndVolatiles".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>水分及挥发物</option>
+            <option value="insolubleImpurity" <%="insolubleImpurity".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>不溶性杂质</option>
+            <option value="solventResidue" <%="solventResidue".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>溶剂残留量</option>
+            <option value="acidValue" <%="acidValue".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>酸值</option>
+            <option value="peroxideValue" <%="peroxideValue".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>过氧化值</option>
         </select></div>
     </div>
     <div class="chartInformation">
-        <input type="submit" value="生成" onclick="showChart()">
+        <input type="submit" value="选定">
+        <button type="button" onclick="showChart()">生成</button>
     </div>
     </form>
 </div>

@@ -10,13 +10,15 @@ function showChart() {
             text: document.getElementById("title").value
             // 该功能依赖 data.js 模块，详见https://www.hcharts.cn/docs/data-modules
         },
+        xAxis: {
+            allowDecimals: false,
+            title: document.getElementById("X-axis").value
+        },
         yAxis: {
             allowDecimals: false,
-            title: {
-                text: '个',
-                rotation: 0
-            }
+            title: document.getElementById("Y-axis").value
         },
+
         tooltip: {
             formatter: function () {
                 return '<b>' + this.series.name + '</b><br/>' +
