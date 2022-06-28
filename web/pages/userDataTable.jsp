@@ -28,26 +28,26 @@
         <td colspan="2">
             <select name="attribute">
                 <option value="null"></option>
-                <option value="id">id</option>
-                <option value="username">姓名</option>
-                <option value="password">密码</option>
-                <option value="email">电子邮件</option>
+                <option value="id" <%="id".equals(request.getParameter("attribute"))?"selected":""%>>id</option>
+                <option value="username" <%="username".equals(request.getParameter("attribute"))?"selected":""%>>姓名</option>
+                <option value="password" <%="password".equals(request.getParameter("attribute"))?"selected":""%>>密码</option>
+                <option value="email" <%="email".equals(request.getParameter("attribute"))?"selected":""%>>电子邮件</option>
             </select>
         </td>
         <td colspan="2">
             <select name="relation">
                 <option value="null"></option>
-                <option value="equal">等于</option>
-                <option value="unequal">不等于</option>
-                <option value="bigger">大于</option>
-                <option value="smaller">小于</option>
-                <option value="notBigger">不大于</option>
-                <option value="notSmaller">不小于</option>
-                <option value="include">包含</option>
-                <option value="notInclude">不包含</option>
+                <option value="equal" <%="equal".equals(request.getParameter("relation"))?"selected":""%>>等于</option>
+                <option value="unequal" <%="unequal".equals(request.getParameter("relation"))?"selected":""%>>不等于</option>
+                <option value="bigger" <%="bigger".equals(request.getParameter("relation"))?"selected":""%>>大于</option>
+                <option value="smaller" <%="smaller".equals(request.getParameter("relation"))?"selected":""%>>小于</option>
+                <option value="notBigger" <%="notBigger".equals(request.getParameter("relation"))?"selected":""%>>不大于</option>
+                <option value="notSmaller" <%="notSmaller".equals(request.getParameter("relation"))?"selected":""%>>不小于</option>
+                <option value="include" <%="include".equals(request.getParameter("relation"))?"selected":""%>>包含</option>
+                <option value="notInclude" <%="notInclude".equals(request.getParameter("relation"))?"selected":""%>>不包含</option>
             </select>
         </td>
-        <td colspan="3"><input type="text" name="value"></td>
+        <td colspan="3"><input type="text" name="value" value="<%=request.getParameter("value")==null?"":request.getParameter("value")%>"></td>
     </tr>
     <!--todo:这里是多重条件区域，可根据需要添加搜索条件-->
     <tr>
@@ -104,14 +104,14 @@
             resultSet.absolute((Page - 1) * PageSize + 1);
             for (int iPage = 1; iPage <= PageSize; iPage++) {
 %>
-    <tr>
+    <tr class="userDataRow">
         <td><%=resultSet.getString("id")%></td>
         <td><%=resultSet.getString("username")%></td>
         <td><%=resultSet.getString("password")%></td>
         <td><%=resultSet.getString("email")%></td>
         <td><a href="updateForm.jsp?id=<%=resultSet.getString("id")%>&username=<%=resultSet.getString("username")%>
                         &password=<%=resultSet.getString("password")%>&email=<%=resultSet.getString("email")%>">修改</a></td>
-        <td><a href="${pageContext.request.contextPath}/DeleteAction?id=<%=resultSet.getString("id")%>">删除</a></td>
+        <td><a onclick="deleteConfirm('${pageContext.request.contextPath}/DeleteAction?id=<%=resultSet.getString("id")%>')">删除</a></td>
     </tr>
 <%
 

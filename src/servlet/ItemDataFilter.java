@@ -27,8 +27,7 @@ public class ItemDataFilter extends HttpServlet {
                 "&PageSize="+PageSize;
         newUrl = newUrl.replace("?expression=nullnull", "?");
         newUrl = newUrl.replace("?expression=null", "?");
-        System.out.println(sql);
-        System.out.println(newUrl);
+
         response.sendRedirect(newUrl);
     }
 

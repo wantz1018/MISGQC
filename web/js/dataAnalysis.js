@@ -18,12 +18,16 @@ function showChart() {
             allowDecimals: false,
             title: document.getElementById("Y-axis").value
         },
-
-        tooltip: {
-            formatter: function () {
-                return '<b>' + this.series.name + '</b><br/>' +
-                    this.point.y + ' 个' + this.point.name.toLowerCase();
-            }
-        }
     });
+}
+
+function choose() {
+    if (document.getElementById("X-axis").value === "null" || document.getElementById("Y-axis").value === "null" || document.getElementById("Y-type").value === "") {
+        alert("请选择必要参数！")
+        document.getElementById("chooseBtn").setAttribute("type", "button")
+
+    }
+    else {
+        document.getElementById("chooseBtn").setAttribute("type", "submit")
+    }
 }

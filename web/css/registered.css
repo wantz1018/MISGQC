@@ -67,3 +67,7 @@ span {
 #passwordNotEqual {
     display: none;
 }
+
+#passwordFormatError {
+    display: none;
+}

@@ -10,6 +10,8 @@
   <head>
     <title>中储粮质检管理信息系统</title>
   </head>
+  <%
+  response.sendRedirect("pages/login.jsp");%>
   <body>
   </body>
 </html>

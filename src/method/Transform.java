@@ -22,7 +22,7 @@ public class Transform {
             case "notInclude" -> symbol = "%20not%20like%20";
         }
         if (Objects.equals(symbol, "%20like%20") || Objects.equals(symbol, "%20not%20like%20")) return attribute + symbol + "'%25" + URLEncoder.encode(value, StandardCharsets.UTF_8) + "%25'";
-        else return attribute + symbol + URLEncoder.encode(value, StandardCharsets.UTF_8);
+        else return attribute + symbol + "'" + URLEncoder.encode(value, StandardCharsets.UTF_8) + "'";
     }
 
     public static String toName(String En) {
@@ -53,6 +53,15 @@ public class Transform {
             case "solventResidue" -> "溶剂残留量(mg/kg)";
             case "acidValue" -> "酸值(mg/g)";
             case "peroxideValue" -> "过氧化值mmol/kg)";
+            default -> "null";
+        };
+    }
+
+    public static String toType(String en) {
+        return switch (en) {
+            case "avg" -> "平均值";
+            case "sum" -> "总计";
+            case "count" -> "计数";
             default -> "null";
         };
     }

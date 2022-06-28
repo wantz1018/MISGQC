@@ -1,7 +1,7 @@
 html {
     text-align: center;
     background-size: cover;
-    background-image: url("../sourse/image/rice-farming-2775411.jpg");
+    background-image: url("https://static01-proxy.hket.com/res/v3/image/content/2110000/2112944/cns20171012124_1024_1024.jpg");
 }
 
 a, span {
@@ -20,6 +20,7 @@ table {
 
 .prompt {
     text-align: justify;
+    width: 100%;
 }
 
 .prompt::after {
@@ -30,6 +31,14 @@ table {
 
 #loginButton {
     width: 100%;
+    border-radius: 10px;
+    background: white;
+    color: forestgreen;
+}
+
+#loginButton:hover {
+    color: white;
+    background: forestgreen;
 }
 
 

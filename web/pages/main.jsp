@@ -39,13 +39,22 @@
     }
 
 %>
-<table style="height: 100%;width: 100%; border: plum;">
-    <tr style="background-color: lightgoldenrodyellow; height: 10%"><td id="mainTop" colspan="2">
-        <span>欢迎您，<%=username%></span>
-        <span><a href="login.jsp">注销</a></span>
-    </td></tr>
-    <tr style="background-color: aquamarine; height: 80%">
-        <td style="width: 15%; background-color: khaki" id="leftLabelArea">
+<table class="preTable">
+    <tr class="top-nav">
+        <td class="topLeft" id="mainTop">
+            <a href="${pageContext.request.contextPath}/pages/login.jsp">
+        <div class="inline"><img src="https://www.sinograin.com.cn/image/logo.png"></div>
+        <div class="inline"><span class="title">中储粮质检信息管理系统</span></div></a>
+        </td>
+        <td class="topRight">
+        <span class="userInfo"><a href="login.jsp">注销</a></span>
+        <span class="userInfo">欢迎您，<%=username%></span>
+        </td>
+    </tr>
+</table>
+<table class="mainTable">
+    <tr style=" height: 90%">
+        <td id="leftLabelArea">
             <div class="leftLabel" id="dataEntry">数据录入</div>
             <div class="leftLabel" id="itemDataLabel">全部数据</div>
             <div class="leftLabel" id="dataAnalysis">数据分析</div>
@@ -68,12 +77,11 @@
                 } catch (Exception ignored)  {}
             %>
         </td>
-        <td style="background-color: burlywood; width: 75%; vertical-align: top">
+        <td id="iframe" >
             <iframe id="iframeView" src="itemDataTable.jsp" height="100%" width="100%">
             </iframe>
         </td>
     </tr>
-    <tr style="background-color: chocolate; height: 10%"><td colspan="2"> </td></tr>
 </table>
 </body>
 </html>

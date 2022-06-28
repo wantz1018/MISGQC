@@ -1,3 +1,4 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.SQLException" %>
 <%@ page import="database.Stmt" %>
@@ -29,14 +30,16 @@
         <%
             String X = request.getParameter("X-axis");
             String Y = request.getParameter("Y-axis");
+            String Y_type = request.getParameter("Y-type");
             String Ex_Y = request.getParameter("ex-Y-axis");
             ResultSet resultSet_3 = null;
             if (X != null && Y != null) {
                 if (Ex_Y != null) {
                     resultSet_3 = Stmt.getResult("select  "+  Ex_Y + " from record");
                 }
-                ResultSet resultSet_1 = Stmt.getResult("select " + X + " from record");
-                ResultSet resultSet_2 = Stmt.getResult("select "  + Y + " from record");
+                    ResultSet resultSet = Stmt.getResult(
+                            "select " + X + ", " + request.getParameter("Y-type") + "(" + Y + ") as " + Transform.toType(Y_type) + " from record group by " + X
+                    );
         %>
         <thead>
         <tr>
@@ -45,7 +48,7 @@
         <%
             if (Ex_Y != null && !Ex_Y.equals("")) {
         %>
-            <th><%=Transform.toName(Ex_Y)%></th>
+            <th><%=Transform.toName(Ex_Y)==null?"":Transform.toName(Ex_Y)%></th>
             <%
                 }
             %>
@@ -55,17 +58,15 @@
 <%
     while (true) {
         try {
-            assert resultSet_1 != null;
-            if (!resultSet_1.next()) break;{
+            assert resultSet != null;
+            if (!resultSet.next()) break;{
 %>
 <tr>
-    <th><%=resultSet_1.getString(X)%></th>
+    <th><%=resultSet.getString(X)%></th>
             <%
-                }
-                assert resultSet_2 != null;
-                if (!resultSet_2.next()) break; {
+                }{
             %>
-                <td><%=resultSet_2.getString(Y)%></td>
+                <td><%=request.getParameter("Y-type").equals("null")?resultSet.getString(Y):resultSet.getString(Transform.toType(Y_type))%></td>
     <%
         }
         assert resultSet_3 != null;
@@ -136,6 +137,14 @@
             <option value="acidValue" <%="acidValue".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>酸值</option>
             <option value="peroxideValue" <%="peroxideValue".equals(request.getParameter("Y-axis")) ? "selected" : ""%>>过氧化值</option>
         </select></div>
+        <div>
+            <select name="Y-type">
+                <option value=""></option>
+                <option value="avg" <%="avg".equals(request.getParameter("Y-type"))? "selected": ""%>>平均值</option>
+                <option value="count" <%="count".equals(request.getParameter("Y-type"))? "selected": ""%>>计数</option>
+                <option value="sum" <%="sum".equals(request.getParameter("Y-type"))? "selected": ""%>>总和</option>
+            </select>
+        </div>
     </div>
     <div class="chartInformation Y-axis-ex">
         <div class="dragTarget">额外Y轴</div>
@@ -152,9 +161,17 @@
             <option value="acidValue" <%="acidValue".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>酸值</option>
             <option value="peroxideValue" <%="peroxideValue".equals(request.getParameter("ex-Y-axis")) ? "selected" : ""%>>过氧化值</option>
         </select></div>
+        <div>
+            <select name="ex-Y-type">
+                <option value=""></option>
+                <option value="avg"  <%="avg".equals(request.getParameter("ex-Y-type"))? "selected": ""%>>平均值</option>
+                <option value="count" <%="count".equals(request.getParameter("ex-Y-type"))? "selected": ""%>>计数</option>
+                <option value="sum" <%="sum".equals(request.getParameter("ex-Y-type"))? "selected": ""%>>总和</option>
+            </select>
+        </div>
     </div>
     <div class="chartInformation">
-        <input type="submit" value="选定">
+        <button type="submit" id="chooseBtn" onclick="choose()">选定</button>
         <button type="button" onclick="showChart()">生成</button>
     </div>
     </form>

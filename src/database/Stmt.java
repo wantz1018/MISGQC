@@ -110,4 +110,11 @@ public class Stmt {
         }
         return resultSet;
     }
+
+    public static String getLastId(String table) throws SQLException {
+        ResultSet resultSet = getResult("select * from " + table + "");
+        assert resultSet != null;
+        resultSet.last();
+        return resultSet.getString("id");
+    }
 }

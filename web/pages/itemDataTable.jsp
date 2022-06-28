@@ -69,7 +69,7 @@
                 <select name="attribute">
                     <option value="null"></option>
                     <option value="id">编号</option>
-                    <option value="dateTime">检测日期</option>
+                    <option value="dateTime">检测时间</option>
                     <option value="storeName">实际存储库点</option>
                     <option value="shelfNo">货位号</option>
                     <option value="variety">品种</option>

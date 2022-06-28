@@ -51,7 +51,6 @@
                 <div><a href="registered.jsp">用户注册</a></div>
             </td>
             <td>
-                <span>忘记密码</span>
                 <span class="prompt" id="checkCodeError"></span>
             </td>
         </tr>

@@ -6,6 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
 @WebServlet(name = "UserDataFilter", value = "/UserDataFilter")
@@ -28,6 +29,7 @@ public class UserDataFilter extends HttpServlet {
                 "&PageSize="+PageSize;
         newUrl = newUrl.replace("?expression=nullnull", "?");
         newUrl = newUrl.replace("?expression=null", "?");
+        newUrl = newUrl + "&attribute=" + attribute + "&relation=" + relation + "&value=" + URLEncoder.encode(value, StandardCharsets.UTF_8);
         response.sendRedirect(newUrl);
     }
 

@@ -1,4 +1,5 @@
-<%--
+        <%@ page import="database.Stmt" %>
+<%@ page import="java.sql.SQLException"%><%--
   Created by IntelliJ IDEA.
   Author:Wantz
   Email:wantz@foxmail.com
@@ -12,6 +13,15 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/itemDataInput.css">
 </head>
 <body>
+<%
+    String lastID;
+    try {
+        lastID = Stmt.getLastId("record");
+    } catch (SQLException e) {
+        throw new RuntimeException(e);
+    }
+    lastID = String.valueOf(Integer.parseInt(lastID) + 1);
+%>
 <form action="${pageContext.request.contextPath}/AddItemAction">
     <table>
         <tr>
@@ -22,7 +32,7 @@
                 编号
             </td>
             <td>
-                <input type="text" name="id" required>
+                <input type="text" name="id" value="<%=lastID%>" readonly>
             </td>
         </tr>
         <tr>

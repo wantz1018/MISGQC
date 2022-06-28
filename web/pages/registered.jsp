@@ -33,7 +33,7 @@
                 用户名
             </td>
             <td>
-                <input type="text" name="username" required>
+                <input type="text" name="username" autocomplete="false" required>
             </td>
         </tr>
         <tr>
@@ -41,7 +41,7 @@
                 电子邮箱
             </td>
             <td>
-                <input type="text" name="email" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9]+" required>
+                <input type="text" name="email" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9]+" placeholder="admin@example.com" autocomplete="false" required>
             </td>
         </tr>
         <tr>
@@ -58,7 +58,7 @@
                 再次输入
             </td>
             <td>
-                <input id="passwordConfirm" type="password" required>
+                <input id="passwordConfirm" placeholder="至少六字符" type="password" required>
                 <span class="prompt" id="passwordNotEqual">两次密码不一致</span>
             </td>
         </tr>
@@ -67,7 +67,7 @@
                 <div class="prompt">验证码</div>
             </td>
             <td>
-                <input type="text" name="" id="checkCodeInputBox" required>
+                <input type="text" name="" id="checkCodeInputBox"  autocomplete="false" required>
                 <a href="#" onclick="createCheckCode()"><img id="checkCodeCanvas" src="">看不清？</a>
             </td>
         </tr>

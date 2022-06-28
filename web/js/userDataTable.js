@@ -7,3 +7,9 @@ window.onload = function () {
         else location.href=location.href.replace(/Page=\d*/, "Page=" + Page);
     })
 }
+
+function deleteConfirm(target) {
+    if (confirm("是否删除？") === true) {
+        location.href = target;
+    }
+}

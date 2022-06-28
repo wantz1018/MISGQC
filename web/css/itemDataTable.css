@@ -1,12 +1,19 @@
 body {
     text-align: center;
+    color: #FFFFFF;
 }
 
 table {
     margin: auto;
 }
 
-.itemDataRow:hover {
-    background-color: cornflowerblue;
+a {
     color: #FFFFFF;
+    text-decoration-line: none;
+}
+
+.itemDataRow:hover {
+    background-color: forestgreen;
+    color: black;
+
 }

@@ -10,6 +10,7 @@
 <html>
 <head>
     <title>Title</title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/addForm.css">
 </head>
 <body>
 <form action="${pageContext.request.contextPath}/AddAction">
@@ -19,19 +20,19 @@
     </tr>
     <tr>
       <td>id</td>
-      <td><input type="text" name="id" required/></td>
+      <td><input type="text" name="id"  pattern="[0-9]{6}" autocomplete="false" required/></td>
     </tr>
     <tr>
       <td>姓名</td>
-      <td><input type="text" name="username" required></td>
+      <td><input type="text" name="username" autocomplete="false" required></td>
     </tr>
     <tr>
       <td>密码</td>
-      <td><input type="password" name="password" required></td>
+      <td><input type="password" name="password"  placeholder="至少6字符"   pattern="[a-zA-Z0-9-_!@#$%^&*?]{6.}" required></td>
     </tr>
     <tr>
       <td>电子邮箱</td>
-      <td><input type="text" name="email" required></td>
+      <td><input type="text" name="email" pattern="[a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9]+" placeholder="admin@example.com" autocomplete="false" required></td>
     </tr>
     <tr>
       <td><a href="userDataTable.jsp">返回</a> </td>

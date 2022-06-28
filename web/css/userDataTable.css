@@ -1,8 +1,20 @@
 body {
     text-align: center;
+    color: #FFFFFF;
 }
 
 table {
     margin: auto;
     text-align: center;
+}
+
+
+a {
+    color: #FFFFFF;
+    text-decoration-line: none;
+}
+
+.userDataRow:hover {
+    background-color: forestgreen;
+    color: black;
 }

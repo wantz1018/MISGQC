@@ -1,15 +1,70 @@
+html {
+    font-family: "Adobe 宋体 Std L";
+
+}
+
+a {
+    text-decoration: none;
+}
+
 .leftLabel {
     width: 100%;
     height: 100px;
     color: black;
     text-align: center;
+    line-height: 100px;
 }
 
 .leftLabel:hover {
     cursor: hand;
-    color: deepskyblue;
+    color: white;
+    background-color: forestgreen;
 }
 
 #leftLabelArea {
     vertical-align: center;
+    width: 15%;
+    background-color: white;
+}
+
+.title {
+    height: 100%;
+    font-family: 华光行楷_CNKI;
+    font-size: xxx-large;
+    color: forestgreen;
+}
+
+.userInfo {
+    float: right;
+}
+
+.mainTable {
+    height: 90%;
+    width: 100%;
+}
+
+.preTable {
+    height: 10%;
+    width: 100%;
+}
+
+.inline {
+    display: inline;
+}
+
+.topLeft {
+    width: 80%;
+}
+
+.topRight {
+    width: 20%;
+}
+
+#iframe {
+    background-image: url("../sourse/image/img.png") ;
+    border: cadetblue 2px solid;
+    width: 75%;
+    vertical-align: top;
+    color: #FFFFFF;
+    background-repeat: no-repeat;
 }
